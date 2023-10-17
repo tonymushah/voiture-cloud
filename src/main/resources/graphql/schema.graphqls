@@ -1,0 +1,134 @@
+scalar UUID
+  @specifiedBy(url: 
+    "https://tools.ietf.org/html/rfc4122"
+  )
+
+scalar DateTime
+  @specifiedBy(url: 
+    "https://scalars.graphql.org/andimarek/date-time.html"
+  )
+
+interface WithUUID_ID{
+  id: UUID!
+}
+
+interface WithUUID_ID_Nullable{
+  id: UUID!
+}
+
+interface ResultList {
+  offset: Int,
+  limit: Int,
+  total: Int
+}
+
+input Pagination {
+  offset: Int,
+  limit: Int,
+}
+
+type Frabicant  {
+  nom: String!
+  modeles(pagination: Pagination): ModelesList!
+}
+
+input FabricantInput {
+  id: UUID,
+  nom: String,
+  modeles: [Modele!]
+}
+
+input ModeleInputFromFrabicant{
+  id: UUID,
+  nom: String
+}
+
+type Modele {
+  id: UUID!,
+  nom: String!,
+  fabricant: Frabicant!
+}
+
+scalar ImatriculationInner;
+
+enum ImatriculationType {
+    CIVIL,
+    MILITARY,
+    NTERNATIONAL
+}
+
+type Imatriculation{
+  inner: ImatriculationInner!,
+  type: ImatriculationType!
+}
+
+type Vehicule {
+  imatriculation: Imatriculation!,
+  modele: Modele,
+  kilometrage(pagination: Pagination):  
+}
+
+type Kilometrage{
+  id: UUID!
+  vehicule: Vehicule!,
+  date: DateTime!,
+  debut: Int!,
+  fin: Int
+}
+
+input KilometrageInput{
+  vehicule: ImatriculationInner,
+  date: DateTime!,
+  debut: Int!,
+  fin: Int
+}
+"""
+input Login {
+  username: String,
+  password: String
+}
+
+type Tokens {
+  refreshToken: String,
+  bearerToken: String
+}
+"""
+type VehiculeList implements ResultList{
+  data: [Vehicule]!
+}
+
+type FrabicantList implements ResultList{
+  data: [Frabicant]!
+}
+
+type KilometrageList implements ResultList{
+  data: [Kilometrage]!
+}
+
+type Query{
+  vehicules(pagination: Pagination, ima: [ImatriculationInner!]): VehiculeList!
+  modeles(pagination: Pagination, ids: [UUID!]): ModelesList!
+  fabricants(pagination: Pagination, ids: [UUID!]) : FrabicantList!
+  kilometrage(pagination: Pagination, ids: [UUID!], vehicules: [ImatriculationInner!]) : KilometrageList!
+}
+
+input FabricantInputFromModele{
+  ad: UUID,
+  nom: String
+}
+
+input ModeleInputFromVehicule{
+  id: UUID,
+  nom: String
+}
+
+input VehiculeInput{
+  imatriculation: ImatriculationInner,
+  modele: ModeleInputFromVehicule,
+  
+}
+
+type Mutation{
+  addOrUpdateVehicules(vehicules: [VehiculeInput!]!) : [Vehicule!]!
+  
+}
