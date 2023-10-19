@@ -13,7 +13,7 @@ interface WithUUID_ID{
 }
 
 interface WithUUID_ID_Nullable{
-  id: UUID!
+  id: UUID
 }
 
 interface ResultList {
@@ -76,12 +76,7 @@ type Kilometrage{
   fin: Int
 }
 
-input KilometrageInput{
-  vehicule: ImatriculationInner,
-  date: DateTime!,
-  debut: Int!,
-  fin: Int
-}
+
 """
 input Login {
   username: String,
@@ -112,23 +107,36 @@ type Query{
   kilometrage(pagination: Pagination, ids: [UUID!], vehicules: [ImatriculationInner!]) : KilometrageList!
 }
 
-input FabricantInputFromModele{
-  ad: UUID,
+input FabricantInputFromModele implements WithUUID_ID_Nullable {
   nom: String
 }
 
-input ModeleInputFromVehicule{
-  id: UUID,
-  nom: String
+input ModeleInputFromVehicule implements WithUUID_ID_Nullable {
+  nom: String,
+  frabricant: FabricantInputFromModele
 }
 
 input VehiculeInput{
-  imatriculation: ImatriculationInner,
-  modele: ModeleInputFromVehicule,
-  
+  imatriculation: ImatriculationInner!,
+  modele: ModeleInputFromVehicule!,
+  kilometrages: [KilometrageInputFromVehicule!]!
+}
+input KilometrageInputFromVehicule {
+  date: DateTime!,
+  debut: Int!,
+  fin: Int
+}
+
+input KilometrageInput implements WithUUID_ID_Nullable{
+  vehicule: ImatriculationInner,
+  date: DateTime!,
+  debut: Int!,
+  fin: Int
 }
 
 type Mutation{
-  addOrUpdateVehicules(vehicules: [VehiculeInput!]!) : [Vehicule!]!
-  
+  saveVehicule(vehicules: [VehiculeInput!]!) : [Vehicule!]!
+  removeVehicule(imatriculations: [ImatriculationInner!]!) : [Vehicule!]!
+  saveKilometrage(kilometrages: [KilometrageInput!]!) : [Kilometrage!]!
+  removeKilometrage(ids: [UUID!]!) : [Kilometrage!]!
 }
