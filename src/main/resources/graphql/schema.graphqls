@@ -23,28 +23,16 @@ interface ResultList {
 }
 
 input Pagination {
-  offset: Int,
-  limit: Int,
+  offset: Int = 0,
+  limit: Int = 10,
 }
 
-type Frabicant  {
+type Frabicant implements WithUUID_ID {
   nom: String!
   modeles(pagination: Pagination): ModelesList!
 }
 
-input FabricantInput {
-  id: UUID,
-  nom: String,
-  modeles: [Modele!]
-}
-
-input ModeleInputFromFrabicant{
-  id: UUID,
-  nom: String
-}
-
-type Modele {
-  id: UUID!,
+type Modele implements WithUUID_ID {
   nom: String!,
   fabricant: Frabicant!
 }
@@ -68,10 +56,9 @@ type Vehicule {
   kilometrage(pagination: Pagination):  
 }
 
-type Kilometrage{
-  id: UUID!
+type Kilometrage implements WithUUID_ID {
   vehicule: Vehicule!,
-  date: DateTime!,
+  inputDate: DateTime!,
   debut: Int!,
   fin: Int
 }
@@ -107,6 +94,15 @@ type Query{
   kilometrage(pagination: Pagination, ids: [UUID!], vehicules: [ImatriculationInner!]) : KilometrageList!
 }
 
+input FabricantInput implements WithUUID_ID_Nullable {
+  nom: String,
+  modeles: [Modele!]
+}
+
+input ModeleInputFromFrabicant implements WithUUID_ID_Nullable {
+  nom: String
+}
+
 input FabricantInputFromModele implements WithUUID_ID_Nullable {
   nom: String
 }
@@ -121,6 +117,7 @@ input VehiculeInput{
   modele: ModeleInputFromVehicule!,
   kilometrages: [KilometrageInputFromVehicule!]!
 }
+
 input KilometrageInputFromVehicule {
   date: DateTime!,
   debut: Int!,

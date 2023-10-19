@@ -1,8 +1,10 @@
-package mg.tonymushah.itu.cloud.voiture.enums;
+package mg.tonymushah.itu.cloud.voiture.types.enums;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import mg.tonymushah.itu.cloud.errors.InvalidImatriculationException;
 
 public enum ImatriculationType {
     CIVIL,
@@ -38,7 +40,7 @@ public enum ImatriculationType {
         return internationalMatcher(input).matches();
     }
 
-    public static ImatriculationType getType(String input){
+    public static ImatriculationType getType(String input) throws InvalidImatriculationException {
         if(isCivil(input)){
             return ImatriculationType.CIVIL;
         }else if (isMilitary(input)){
@@ -46,7 +48,7 @@ public enum ImatriculationType {
         }else if (isInternational(input)){
             return ImatriculationType.INTERNATIONAL;
         }else{
-            return null;
+            throw new InvalidImatriculationException(input);
         }
     }
 }

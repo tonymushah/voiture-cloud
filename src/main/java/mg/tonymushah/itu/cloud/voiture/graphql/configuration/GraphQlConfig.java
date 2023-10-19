@@ -6,7 +6,7 @@ import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
 import graphql.scalars.ExtendedScalars;
 import graphql.schema.GraphQLScalarType;
-import mg.tonymushah.itu.cloud.voiture.enums.ImatriculationType;
+import mg.tonymushah.itu.cloud.voiture.types.enums.ImatriculationType;
 
 @Configuration
 public class GraphQlConfig {
@@ -15,11 +15,11 @@ public class GraphQlConfig {
         GraphQLScalarType imatriculationInner = ExtendedScalars
                 .newRegexScalar("ImatriculationInner")
                 .addPatterns(
-                    ImatriculationType.civilPattern(), 
-                    ImatriculationType.militaryPattern(), 
-                    ImatriculationType.internationalPattern()
-                )
+                        ImatriculationType.civilPattern(),
+                        ImatriculationType.militaryPattern(),
+                        ImatriculationType.internationalPattern())
                 .build();
-        return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.UUID).scalar(imatriculationInner);
+        return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.UUID).scalar(imatriculationInner)
+                .scalar(ExtendedScalars.DateTime);
     }
 }
