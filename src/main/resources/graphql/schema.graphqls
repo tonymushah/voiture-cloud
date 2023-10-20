@@ -45,6 +45,22 @@ enum ImatriculationType {
     NTERNATIONAL
 }
 
+type VehiculeList implements ResultList{
+  data: [Vehicule]!
+}
+
+type FrabicantList implements ResultList{
+  data: [Frabicant]!
+}
+
+type KilometrageList implements ResultList{
+  data: [Kilometrage]!
+}
+
+type ModelesList implements ResultList{
+  data: [Modele]!
+}
+
 type Imatriculation{
   inner: ImatriculationInner!,
   type: ImatriculationType!
@@ -53,7 +69,7 @@ type Imatriculation{
 type Vehicule {
   imatriculation: Imatriculation!,
   modele: Modele,
-  kilometrage(pagination: Pagination):  
+  kilometrage(pagination: Pagination): KilometrageList!
 }
 
 type Kilometrage implements WithUUID_ID {
@@ -75,17 +91,7 @@ type Tokens {
   bearerToken: String
 }
 """
-type VehiculeList implements ResultList{
-  data: [Vehicule]!
-}
 
-type FrabicantList implements ResultList{
-  data: [Frabicant]!
-}
-
-type KilometrageList implements ResultList{
-  data: [Kilometrage]!
-}
 
 type Query{
   vehicules(pagination: Pagination, ima: [ImatriculationInner!]): VehiculeList!
@@ -94,13 +100,13 @@ type Query{
   kilometrage(pagination: Pagination, ids: [UUID!], vehicules: [ImatriculationInner!]) : KilometrageList!
 }
 
-input FabricantInput implements WithUUID_ID_Nullable {
-  nom: String,
-  modeles: [Modele!]
-}
-
 input ModeleInputFromFrabicant implements WithUUID_ID_Nullable {
   nom: String
+}
+
+input FabricantInput implements WithUUID_ID_Nullable {
+  nom: String,
+  modeles: [ModeleInputFromFrabicant!]
 }
 
 input FabricantInputFromModele implements WithUUID_ID_Nullable {

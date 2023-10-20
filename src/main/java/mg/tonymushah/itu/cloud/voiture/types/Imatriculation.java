@@ -1,6 +1,6 @@
 package mg.tonymushah.itu.cloud.voiture.types;
 
-import mg.tonymushah.itu.cloud.errors.InvalidImatriculationException;
+import mg.tonymushah.itu.cloud.voiture.errors.InvalidImatriculationException;
 import mg.tonymushah.itu.cloud.voiture.types.enums.ImatriculationType;
 
 public class Imatriculation {

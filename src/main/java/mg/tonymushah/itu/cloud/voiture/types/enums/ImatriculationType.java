@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import mg.tonymushah.itu.cloud.errors.InvalidImatriculationException;
+import mg.tonymushah.itu.cloud.voiture.errors.InvalidImatriculationException;
 
 public enum ImatriculationType {
     CIVIL,

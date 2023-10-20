@@ -1,4 +1,4 @@
-package mg.tonymushah.itu.cloud.errors;
+package mg.tonymushah.itu.cloud.voiture.errors;
 
 public class InvalidImatriculationException extends RuntimeException {
     public InvalidImatriculationException(String input){

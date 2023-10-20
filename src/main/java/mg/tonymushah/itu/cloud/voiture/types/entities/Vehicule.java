@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import mg.tonymushah.itu.cloud.errors.InvalidImatriculationException;
+import mg.tonymushah.itu.cloud.voiture.errors.InvalidImatriculationException;
 import mg.tonymushah.itu.cloud.voiture.types.Imatriculation;
 
 @Entity
