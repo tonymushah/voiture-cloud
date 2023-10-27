@@ -19,6 +19,7 @@ public abstract class WithUUID_ID_Nullable {
     }
 
     public WithUUID_ID_Nullable() {
+        this.setId(Optional.empty());
     }
     
 }

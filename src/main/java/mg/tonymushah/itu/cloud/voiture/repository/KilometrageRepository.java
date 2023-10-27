@@ -12,7 +12,7 @@ import mg.tonymushah.itu.cloud.voiture.types.generics.ResultList;
 import mg.tonymushah.itu.cloud.voiture.types.inputs.Pagination;
 
 public interface KilometrageRepository extends CrudRepository<Kilometrage, UUID> {
-    default ResultList<Kilometrage> getModeles(Pagination pagination, Optional<List<UUID>> ids){
+    default ResultList<Kilometrage> getKilometrages(Pagination pagination, Optional<List<UUID>> ids){
         return ids.map(_ids -> {
             return new ResultList<Kilometrage>(StreamSupport.stream(this.findAllById(_ids).spliterator(), true), pagination);
         }).orElseGet(() -> {

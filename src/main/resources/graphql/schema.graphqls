@@ -118,16 +118,16 @@ input ModeleInputFromVehicule implements WithUUID_ID_Nullable {
   frabricant: FabricantInputFromModele
 }
 
-input VehiculeInput{
-  imatriculation: ImatriculationInner!,
-  modele: ModeleInputFromVehicule!,
-  kilometrages: [KilometrageInputFromVehicule!]!
-}
-
 input KilometrageInputFromVehicule {
   date: DateTime!,
   debut: Int!,
   fin: Int
+}
+
+input VehiculeInput{
+  imatriculation: ImatriculationInner!,
+  modele: ModeleInputFromVehicule!,
+  kilometrages: [KilometrageInputFromVehicule!]!
 }
 
 input KilometrageInput implements WithUUID_ID_Nullable{
