@@ -131,7 +131,7 @@ input VehiculeInput{
 }
 
 input KilometrageInput implements WithUUID_ID_Nullable{
-  vehicule: ImatriculationInner,
+  vehicule: ImatriculationInner!,
   date: DateTime!,
   debut: Int!,
   fin: Int
